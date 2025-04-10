@@ -1,5 +1,5 @@
 import styles from "../styles/About.module.css";
-const imageUrl = process.env.REACT_APP_PROFILE_IMAGE_URL;
+import imageUrl from "../styles/my-img.jpeg";
 export default function About() {
   return (
     <section className={styles.about}>

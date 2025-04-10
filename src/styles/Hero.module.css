@@ -1,0 +1,73 @@
+.hero {
+  background: linear-gradient(to right, #f8cdda, #a18cd1);
+  min-height: 79vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2f1b30;
+  text-align: center;
+  padding: 2rem;
+  font-family: "Playfair Display", serif;
+  transition: all 0.5s ease-in-out;
+}
+
+.overlay {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 3rem;
+  border-radius: 2rem;
+  box-shadow: 0 10px 30px rgba(161, 140, 209, 0.3);
+  backdrop-filter: blur(10px);
+  animation: fadeIn 1.8s ease;
+  max-width: 850px;
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #741b47;
+  animation: floatText 1.2s ease;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #6a0572;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #4a2d4a;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes floatText {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.2rem;
+  }
+  .subtitle {
+    font-size: 1.2rem;
+  }
+}

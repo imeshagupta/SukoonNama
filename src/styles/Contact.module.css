@@ -1,0 +1,146 @@
+.contactSection {
+  background: linear-gradient(to right, #f8cdda, #a18cd1);
+  padding: 60px 20px;
+  font-family: "Playfair Display", serif;
+  animation: fadeIn 0.7s ease-in;
+}
+
+.contactContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(163, 91, 204, 0.3);
+  overflow: hidden;
+}
+
+.contactLeft {
+  flex: 1;
+  padding: 40px 30px;
+  color: #5c2d6b;
+}
+
+.sectionTitle {
+  font-size: 32px;
+  margin-bottom: 15px;
+  color: #741b7a;
+  text-align: center;
+}
+
+.contactText {
+  font-size: 18px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.contactIcons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 24px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.contactIcons a {
+  color: #a14b9b;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.contactIcons a:hover {
+  transform: scale(1.2);
+  color: #902b89;
+}
+
+.contactRight {
+  flex: 1;
+  padding: 40px 30px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contactForm input,
+.contactForm textarea {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #f5ebf9;
+  font-size: 16px;
+  font-family: "Playfair Display", serif;
+  resize: none;
+  color: #4e2c56;
+  box-shadow: inset 0 0 5px rgba(194, 120, 194, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.contactForm input:focus,
+.contactForm textarea:focus {
+  outline: none;
+  box-shadow: 0 0 10px #b85fc6;
+}
+
+.contactBtn {
+  padding: 12px 20px;
+  background: linear-gradient(to right, #c471ed, #f64f59);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family: "Playfair Display", serif;
+}
+
+.contactBtn:hover {
+  background: linear-gradient(to right, #d383cc, #f67575);
+}
+
+@media (max-width: 768px) {
+  .contactContainer {
+    flex-direction: column;
+  }
+
+  .contactLeft,
+  .contactRight {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 26px;
+  }
+
+  .contactForm input,
+  .contactForm textarea {
+    font-size: 15px;
+  }
+
+  .contactBtn {
+    font-size: 15px;
+  }
+
+  .contactIcons {
+    font-size: 20px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

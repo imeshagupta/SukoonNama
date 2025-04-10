@@ -1,0 +1,157 @@
+.about {
+  background: #fff0f6;
+  color: #4b2a52;
+  padding: 5rem 2rem;
+  font-family: "Playfair Display", serif;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  max-width: 900px;
+  text-align: center;
+  animation: fadeUp 1.5s ease;
+}
+
+.heading {
+  font-size: 2.5rem;
+  color: #7a1c6f;
+  margin-bottom: 1.5rem;
+}
+
+.text {
+  font-size: 1.2rem;
+  line-height: 2;
+  color: #5e436d;
+}
+
+.signature {
+  margin-top: 1.5rem;
+  font-style: italic;
+  color: #9d65c9;
+}
+
+/* ✨ Writer Intro Card */
+.writerIntroCard {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(to right, #fce4ec, #f3e5f5);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 2.5rem 0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: fadeInCard 1s ease-in-out;
+  flex-wrap: wrap;
+}
+
+.writerImage {
+  width: 120px;
+  height: 120px;
+  background: url("./my-img.jpeg") no-repeat center/cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.submitInvite {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background-color: #f8e1f4;
+  border-left: 4px solid #ba68c8;
+  border-radius: 10px;
+}
+
+.link {
+  color: #7b1fa2;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.link:hover {
+  color: #4a0072;
+}
+
+.writerContent {
+  text-align: left;
+  flex: 1;
+}
+
+.writerName {
+  font-size: 1.6rem;
+  color: #7b1fa2;
+  margin-bottom: 0.5rem;
+}
+
+.writerBio {
+  font-size: 1.1rem;
+  color: #5e436d;
+  line-height: 1.8;
+}
+
+/* Achievements Section */
+.subheading {
+  margin-top: 30px;
+  font-size: 22px;
+  color: #800080;
+  font-weight: 600;
+}
+
+.achievementsList {
+  margin-top: 10px;
+  padding-left: 20px;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.achievements ul {
+  list-style: none;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .heading {
+    font-size: 2rem;
+  }
+
+  .text {
+    font-size: 1.05rem;
+  }
+
+  .writerIntroCard {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .writerContent {
+    text-align: center;
+  }
+
+  .writerImage {
+    width: 100px;
+    height: 100px;
+  }
+}

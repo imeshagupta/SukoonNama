@@ -1,0 +1,138 @@
+.adminContainer {
+  padding: 2rem;
+  max-width: 600px;
+  margin: auto;
+  background: linear-gradient(to right, #fce4ec, #f3e5f5);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.6s ease-in-out;
+  width: 90%;
+  box-sizing: border-box;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #7b1fa2;
+  text-align: center;
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  border: 1.5px solid #ce93d8;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+select.formInput {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath fill='%237b1fa2' d='M7 10L0 0h14z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.8rem;
+  cursor: pointer;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: #ba68c8;
+  box-shadow: 0 0 5px rgba(186, 104, 200, 0.5);
+}
+
+.submitButton {
+  background: linear-gradient(to right, #ba68c8, #f06292);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.submitButton:hover {
+  transform: scale(1.03);
+}
+
+.logoutButton {
+  margin-top: 1.5rem;
+  background: #d32f2f;
+  color: white;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.logoutButton:hover {
+  background-color: #b71c1c;
+}
+
+.successMessage {
+  color: #388e3c;
+  font-weight: bold;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .adminContainer {
+    padding: 1.2rem;
+    width: 95%;
+  }
+
+  .heading {
+    font-size: 1.6rem;
+  }
+
+  .submitButton,
+  .logoutButton {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .formInput,
+  .formTextarea {
+    font-size: 0.95rem;
+    padding: 0.7rem 1rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .heading {
+    font-size: 1.4rem;
+  }
+
+  .formInput,
+  .formTextarea {
+    font-size: 0.9rem;
+  }
+
+  .submitButton,
+  .logoutButton {
+    font-size: 0.9rem;
+  }
+}

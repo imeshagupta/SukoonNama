@@ -1,0 +1,172 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: linear-gradient(to right, #ff91b2, #7947ee);
+  border-bottom: 2px solid #d9a5e0;
+  position: relative;
+  font-family: "Playfair Display", serif;
+  box-shadow: 0 4px 12px rgba(172, 123, 209, 0.2);
+  z-index: 1000;
+}
+
+.logo img {
+  width: 120px;
+  transition: transform 0.3s ease;
+}
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+.nav {
+  display: flex;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #5b2b6e;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.navLink::after {
+  content: "";
+  display: block;
+  width: 0%;
+  height: 2px;
+  background: #b561c3;
+  transition: width 0.3s;
+  margin-top: 5px;
+}
+.navLink:hover::after {
+  width: 100%;
+}
+.navLink:hover {
+  color: #c370d1;
+}
+.authButtons {
+  display: flex;
+}
+
+.signupBtn {
+  background: linear-gradient(to right, #f3a7c1, #c86dd7);
+  color: white;
+  padding: 8px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(200, 109, 215, 0.3);
+}
+.signupBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(200, 109, 215, 0.5);
+}
+
+.menuToggle {
+  display: none;
+  font-size: 30px;
+  color: #5b2b6e;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+  }
+
+  .nav {
+    display: none;
+    flex-direction: column;
+    background: linear-gradient(to bottom, #ffb6da, #cd83ed);
+    padding: 20px;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 4px 12px rgba(161, 140, 209, 0.25);
+    animation: slideDown 0.3s ease;
+  }
+
+  .showNav {
+    display: flex;
+  }
+
+  .nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .nav ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(91, 43, 110, 0.1);
+  }
+
+  .authButtons {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  .signupBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .menuToggle {
+    display: block;
+  }
+}
+
+@media (max-width: 468px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .logo {
+    flex-grow: 1;
+  }
+
+  .signupBtn {
+    width: auto;
+    margin-left: 10px;
+  }
+
+  .menuToggle {
+    font-size: 26px;
+  }
+
+  .nav {
+    top: 50px;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

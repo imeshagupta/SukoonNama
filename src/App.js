@@ -7,8 +7,7 @@ import About from "./components/About";
 import Faqs from "./components/Faqs";
 import Home from "./pages/Home";
 import Contact from "./components/Contact";
-import Admin from "./pages/Admin"; // Updated import for AdminPage
-import PoemsList from "./components/PoemsList";
+import Admin from "./pages/Admin";
 
 function App() {
   return (

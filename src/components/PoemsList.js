@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
-import { useLocation } from "react-router-dom";
 import { db } from "../firebase/firebase";
 import styles from "../styles/PoemsList.module.css";
 
 const PoemsList = () => {
   const [poems, setPoems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const location = useLocation();
-  const isAdminPage = location.pathname === "/admin";
 
   useEffect(() => {
     const fetchPoems = async () => {

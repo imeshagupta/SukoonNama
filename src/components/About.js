@@ -1,5 +1,5 @@
 import styles from "../styles/About.module.css";
-
+const imageUrl = process.env.REACT_APP_PROFILE_IMAGE_URL;
 export default function About() {
   return (
     <section className={styles.about}>
@@ -21,7 +21,10 @@ export default function About() {
         <p className={styles.signature}>~SukoonNama 🌸</p>
 
         <div className={styles.writerIntroCard}>
-          <div className={styles.writerImage}></div>
+          <div
+            className={styles.writerImage}
+            style={{ backgroundImage: `url(${imageUrl})` }}
+          ></div>
           <div className={styles.writerContent}>
             <h3 className={styles.writerName}>Meet the Writer</h3>
             <p className={styles.writerBio}>

@@ -12,8 +12,7 @@
 /build
 
 .env
-# Ignore a single image
-/src/styles/my-img.jpeg
+
 
 # misc
 .DS_Store

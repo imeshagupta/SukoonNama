@@ -15,11 +15,11 @@ const Admin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (title.trim() === "" || poem.trim() === "") return;
+    if (poem.trim() === "") return; // Only poem is required
 
     try {
       await addDoc(collection(db, "poems"), {
-        title,
+        title: title.trim() || null, // Save null if title is empty
         poem,
         category,
         createdAt: new Date(),
@@ -39,10 +39,9 @@ const Admin = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Poem Title"
+          placeholder="Poem Title (optional)"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          required
           className={styles.formInput}
         />
         <br />
@@ -64,6 +63,10 @@ const Admin = () => {
           <option value="Sad">Sad</option>
           <option value="Motivational">Motivational</option>
           <option value="Nature">Nature</option>
+          <option value="Devotional">Devotional</option>
+          <option value="Thoughts">Thoughts</option>
+          <option value="Childhood">Childhood</option>
+          <option value="Trust">Trust</option>
         </select>
         <br />
         <button type="submit" className={styles.submitButton}>

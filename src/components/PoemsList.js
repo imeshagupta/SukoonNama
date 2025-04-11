@@ -32,7 +32,17 @@ const PoemsList = () => {
       <h2 className={styles.heading}>SukoonNama Collection</h2>
 
       <div className={styles.categoryBar}>
-        {["All", "Love", "Nature", "Sad", "Motivational"].map((cat) => (
+        {[
+          "All",
+          "Love",
+          "Nature",
+          "Sad",
+          "Motivational",
+          "Devotional",
+          "Thoughts",
+          "Childhood",
+          "Trust",
+        ].map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
@@ -59,9 +69,7 @@ const PoemsList = () => {
             >
               <h3>{poem.title}</h3>
               <p>{poem.poem}</p>
-              {poem.category && (
-                <p className={styles.categoryLabel}>#{poem.category}</p>
-              )}
+              {poem.category && <p className={styles.categoryLabel}></p>}
             </div>
           );
         })

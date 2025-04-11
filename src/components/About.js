@@ -1,5 +1,42 @@
 import styles from "../styles/About.module.css";
 import imageUrl from "../styles/my-img.jpeg";
+import cert1 from "../assets/img1.jpg";
+import cert2 from "../assets/img2.jpg";
+import cert3 from "../assets/img5.jpg";
+import cert4 from "../assets/img4.jpg";
+
+import cert5 from "../assets/img3.jpg";
+import cert6 from "../assets/img10.jpg";
+import cert7 from "../assets/img7.jpg";
+import cert8 from "../assets/img15.jpg";
+
+import cert9 from "../assets/img8.jpg";
+import cert10 from "../assets/img9.jpg";
+import cert11 from "../assets/img11.jpg";
+import cert12 from "../assets/img12.jpg";
+
+import cert13 from "../assets/img13.jpg";
+import cert14 from "../assets/img14.jpg";
+import cert15 from "../assets/img6.jpg";
+
+const galleryImages = [
+  cert1,
+  cert2,
+  cert3,
+  cert4,
+  cert5,
+  cert6,
+  cert7,
+  cert8,
+  cert9,
+  cert10,
+  cert11,
+  cert12,
+  cert13,
+  cert14,
+  cert15,
+];
+
 export default function About() {
   return (
     <section className={styles.about}>
@@ -8,7 +45,7 @@ export default function About() {
 
         <p className={styles.text}>
           <strong>SukoonNama</strong> एक ऐसी जगह है जहाँ शब्दों से जज़्बात बुनते
-          हैं। यहाँ आपको मिलेंगी शायरियाँ, ग़ज़लें, और दिल से निकली हुई बातें —
+          हैं। यहाँ आपको मिलेंगी शायरियाँ, कविताएँ, और दिल से निकली हुई बातें —
           जो हर किसी के जज़्बातों को छू जाएँ।
         </p>
 
@@ -47,7 +84,24 @@ export default function About() {
               🏆 Secured <strong>First Prize</strong> in an inter-college poetry
               competition during academic years.
             </li>
+            <li>
+              📜 Received <strong>certificates of appreciation</strong> from
+              various literary platforms for outstanding contributions in
+              poetry.
+            </li>
           </ul>
+
+          <div className={styles.gallery}>
+            {galleryImages.map((img, index) => (
+              <div key={index} className={styles.galleryItem}>
+                <img
+                  src={img}
+                  alt={`Certificate ${index + 1}`}
+                  className={styles.galleryImage}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className={styles.submitInvite}>

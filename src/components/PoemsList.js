@@ -29,7 +29,7 @@ const PoemsList = () => {
 
   return (
     <div className={styles.poemList}>
-      <h2 className={styles.heading}>Sukoonama Collection</h2>
+      <h2 className={styles.heading}>SukoonNama Collection</h2>
 
       <div className={styles.categoryBar}>
         {["All", "Love", "Nature", "Sad", "Motivational"].map((cat) => (

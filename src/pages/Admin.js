@@ -62,10 +62,13 @@ const Admin = () => {
           <option value="Love">Love</option>
           <option value="Sad">Sad</option>
           <option value="Motivational">Motivational</option>
-          <option value="Nature">Nature</option>
           <option value="Devotional">Devotional</option>
-          <option value="Thoughts">Thoughts</option>
           <option value="Childhood">Childhood</option>
+          <option value="Festival">Festival</option>
+          <option value="Life">Life</option>
+          <option value="Humor">Humor</option>
+          <option value="Friendship">Friendship</option>
+          <option value="Parents">Parents</option>
           <option value="Trust">Trust</option>
         </select>
         <br />

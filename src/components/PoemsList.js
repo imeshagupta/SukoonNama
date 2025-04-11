@@ -35,12 +35,15 @@ const PoemsList = () => {
         {[
           "All",
           "Love",
-          "Nature",
           "Sad",
           "Motivational",
           "Devotional",
-          "Thoughts",
           "Childhood",
+          "Festival",
+          "Life",
+          "Humor",
+          "Friendship",
+          "Parents",
           "Trust",
         ].map((cat) => (
           <button

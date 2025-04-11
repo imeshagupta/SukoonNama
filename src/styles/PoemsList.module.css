@@ -31,29 +31,53 @@
   justify-content: center;
   margin-bottom: 2rem;
 }
-.category-romantic {
+.category-love {
   background: linear-gradient(to right, #fce4ec, #f8bbd0);
+  border-left: 5px solid #f8bbd0;
 }
 
 .category-sad {
-  background: linear-gradient(to right, #e0e0e0, #bdbdbd);
+  background: linear-gradient(to right, #e0e0e0, #625f5f);
 }
 
 .category-motivational {
   background: linear-gradient(to right, #dcedc8, #aed581);
 }
 
-.category-friendship {
-  background: linear-gradient(to right, #b3e5fc, #4fc3f7);
+.category-devotional {
+  background: linear-gradient(to right, #dcb189, #d46b08);
 }
 
-.category-nature {
-  background: linear-gradient(to right, #c8e6c9, #a5d6a7);
+.category-childhood {
+  background: linear-gradient(to right, #e5b2f1, #da77f2);
+}
+
+.category-festival {
+  background: linear-gradient(to right, #e490a9, #e75480);
 }
 
 .category-life {
-  background: linear-gradient(to right, #ffe082, #ffca28);
+  background: linear-gradient(to right, #7ee4ef, #0097a7);
 }
+
+.category-humor {
+  background: linear-gradient(to right, #ead16d, #f1c40f);
+}
+
+.category-friendship {
+  background: linear-gradient(to right, #7eaaf1, #4285f4);
+}
+.category-parents {
+  background: linear-gradient(to right, #f7a587, #f55835);
+}
+.category-trust {
+  background: linear-gradient(to right, #86e9f7, #00bcd4);
+}
+
+.category-default {
+  background: linear-gradient(to right, #f5f5f5, #f5f5f5);
+}
+
 .categoryButton {
   background-color: #f8bbd0;
   color: #4a148c;

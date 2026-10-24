@@ -4,6 +4,7 @@ import { db } from "../firebase/firebase";
 import styles from "../styles/Testimonials.module.css";
 import TestimonialsForm from "./TestimonialsForm";
 import { Helmet } from "react-helmet-async";
+import { FaTimes } from "react-icons/fa";
 
 const staticTestimonials = [
   {
@@ -57,6 +58,17 @@ const Testimonials = () => {
     fetchTestimonials();
   }, []);
 
+  useEffect(() => {
+    if (showForm) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showForm]);
+
   return (
     <section className={styles.testimonials}>
       <Helmet>
@@ -67,20 +79,10 @@ const Testimonials = () => {
         <h2 className={styles.heading}>पाठकों की राय</h2>
         <div className={styles.headerRow}>
           <p className={styles.intro}>Dil se nikle shukriya... If SukoonNama touched your heart, do share your words.</p>
-          <button className={styles.addBtn} onClick={() => setShowForm(!showForm)}>
-            {showForm ? "Close" : "Write a Testimonial"}
+          <button className={styles.addBtn} onClick={() => setShowForm(true)}>
+            Write a Testimonial
           </button>
         </div>
-        {showForm && (
-          <div className={styles.formWrap}>
-            <TestimonialsForm
-              onSubmitted={() => {
-                fetchTestimonials();
-                setShowForm(false);
-              }}
-            />
-          </div>
-        )}
         <div className={styles.grid}>
           {testimonials.map((item, index) => (
             <article key={item.id || index} className={styles.card}>
@@ -90,6 +92,21 @@ const Testimonials = () => {
           ))}
         </div>
       </div>
+      {showForm && (
+        <div className={styles.modalBackdrop} onClick={() => setShowForm(false)}>
+          <div className={styles.modal} role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
+            <button className={styles.modalClose} onClick={() => setShowForm(false)} aria-label="Close">
+              <FaTimes />
+            </button>
+            <TestimonialsForm
+              onSubmitted={() => {
+                fetchTestimonials();
+                setShowForm(false);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 };

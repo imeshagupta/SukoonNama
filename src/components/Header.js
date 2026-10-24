@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/Header.module.css";
-import { FaInstagram, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);

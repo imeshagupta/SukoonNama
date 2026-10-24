@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/NotFound.module.css";
 import { FaHome } from "react-icons/fa";

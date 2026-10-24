@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/Header.module.css";
+import { FaInstagram, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,10 +9,12 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
-        <Link to="/"></Link>
+        <Link to="/" className={styles.logoText}>
+          SukoonNama
+        </Link>
       </div>
 
-      <button className={styles.menuToggle} onClick={() => setIsOpen(!isOpen)}>
+      <button className={styles.menuToggle} onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
         ☰
       </button>
 
@@ -45,6 +48,8 @@ const Header = () => {
           </li>
         </ul>
       </nav>
+
+      {/* social links removed from header as requested */}
 
       {/* <div className={styles.authButtons}>
         <Link to="/signup">

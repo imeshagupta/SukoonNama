@@ -8,10 +8,16 @@ import Faqs from "./components/Faqs";
 import Home from "./pages/Home";
 import Contact from "./components/Contact";
 import Admin from "./pages/Admin";
+import NotFound from "./pages/NotFound";
+import { Helmet } from "react-helmet-async";
 
 function App() {
   return (
     <Router>
+      <Helmet>
+        <title>SukoonNama 🌸 | Shayarī & Jazbaat</title>
+        <meta name="description" content="SukoonNama - दिल की बात, लफ़्ज़ों के साथ। Shayarī aur jazbaat ki duniya by Esha Gupta." />
+      </Helmet>
       <Header />
 
       <Routes>
@@ -21,6 +27,7 @@ function App() {
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/faqs" element={<Faqs />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </Router>

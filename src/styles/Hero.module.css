@@ -1,6 +1,8 @@
 .hero {
-  background: linear-gradient(to right, #f8cdda, #a18cd1);
-  min-height: 79vh;
+  background: radial-gradient(circle at top, rgba(252, 228, 236, 0.9), rgba(206, 147, 216, 0.9)),
+    url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1920&q=80")
+      center/cover;
+  min-height: 82vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,37 +10,79 @@
   text-align: center;
   padding: 2rem;
   font-family: "Playfair Display", serif;
-  transition: all 0.5s ease-in-out;
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(248, 187, 208, 0.25) 0%, rgba(156, 39, 176, 0.35) 100%);
 }
 
 .overlay {
-  background: rgba(255, 255, 255, 0.6);
-  padding: 3rem;
-  border-radius: 2rem;
-  box-shadow: 0 10px 30px rgba(161, 140, 209, 0.3);
-  backdrop-filter: blur(10px);
-  animation: fadeIn 1.8s ease;
-  max-width: 850px;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 247, 251, 0.78);
+  padding: clamp(2rem, 6vw, 4rem);
+  border-radius: 2.4rem;
+  box-shadow: 0 30px 60px rgba(123, 31, 162, 0.25);
+  backdrop-filter: blur(12px);
+  animation: fadeIn 1.6s ease;
+  max-width: 880px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.kicker {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.4rem;
+  font-size: 0.9rem;
+  color: #8e24aa;
 }
 
 .title {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: #741b47;
+  font-size: clamp(2.8rem, 9vw, 5rem);
+  margin: 0;
+  color: #6a1b9a;
   animation: floatText 1.2s ease;
 }
 
 .subtitle {
-  font-size: 1.5rem;
+  font-size: clamp(1.4rem, 4vw, 2rem);
   font-style: italic;
-  color: #6a0572;
-  margin-bottom: 1rem;
+  color: #7b1fa2;
+  margin: 0;
+  font-family: "Noto Nastaliq Urdu", serif;
 }
 
 .description {
-  font-size: 1.2rem;
-  line-height: 1.8;
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+  line-height: 1.9;
   color: #4a2d4a;
+  margin: 0;
+  max-width: 640px;
+}
+
+.cta {
+  margin-top: 1rem;
+  text-decoration: none;
+  background: linear-gradient(135deg, #ba68c8, #8e24aa);
+  color: white;
+  padding: 0.8rem 2.6rem;
+  border-radius: 999px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  box-shadow: 0 20px 40px rgba(142, 36, 170, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 46px rgba(142, 36, 170, 0.34);
 }
 
 @keyframes fadeIn {

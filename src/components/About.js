@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "../styles/About.module.css";
 import imageUrl from "../styles/my-img.jpeg";
 import cert1 from "../assets/img1.jpg";
@@ -18,6 +19,8 @@ import cert12 from "../assets/img12.jpg";
 import cert13 from "../assets/img13.jpg";
 import cert14 from "../assets/img14.jpg";
 import cert15 from "../assets/img6.jpg";
+import GalleryLightbox from "./GalleryLightbox";
+import { Helmet } from "react-helmet-async";
 
 const galleryImages = [
   cert1,
@@ -38,8 +41,19 @@ const galleryImages = [
 ];
 
 export default function About() {
+  const [lightbox, setLightbox] = useState({ open: false, index: 0 });
+
+  const openLightbox = (index) => setLightbox({ open: true, index });
+  const closeLightbox = () => setLightbox({ open: false, index: 0 });
+  const prev = () => setLightbox((prevState) => ({ ...prevState, index: (prevState.index - 1 + galleryImages.length) % galleryImages.length }));
+  const next = () => setLightbox((prevState) => ({ ...prevState, index: (prevState.index + 1) % galleryImages.length }));
+
   return (
     <section className={styles.about}>
+      <Helmet>
+        <title>About | SukoonNama</title>
+        <meta name="description" content="About SukoonNama and writer Esha Gupta - shayari, poetry and jazbaat." />
+      </Helmet>
       <div className={styles.container}>
         <h2 className={styles.heading}>About</h2>
 
@@ -56,6 +70,17 @@ export default function About() {
         </p>
 
         <p className={styles.signature}>~SukoonNama 🌸</p>
+
+        <div className={styles.whySection}>
+          <h3 className={styles.subheading}>Why SukoonNama?</h3>
+          <p className={styles.text}>
+            SukoonNama सिर्फ एक नाम नहीं, एक एहसास है। यह मंच शब्दों से सुकून
+            देने का एक छोटा सा प्रयास है — जहाँ हर शायरी, हर कविता दिल के किसी
+            कोने की आवाज़ बनकर सामने आती है। मेरा मकसद है कि जज़्बातों को लफ़्ज़ों
+            में पिरोकर उन्हें ऐसे साझा करूँ कि पढ़ने वाले को भी वही सुकून मिले,
+            जो लिखते वक़्त मुझे मिला था।
+          </p>
+        </div>
 
         <div className={styles.writerIntroCard}>
           <div
@@ -93,13 +118,19 @@ export default function About() {
 
           <div className={styles.gallery}>
             {galleryImages.map((img, index) => (
-              <div key={index} className={styles.galleryItem}>
+              <button
+                key={index}
+                className={styles.galleryItem}
+                onClick={() => openLightbox(index)}
+                aria-label={`View certificate ${index + 1}`}
+              >
                 <img
                   src={img}
                   alt={`Certificate ${index + 1}`}
                   className={styles.galleryImage}
+                  loading="lazy"
                 />
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -115,8 +146,20 @@ export default function About() {
             page or <strong>Social Media accounts</strong>. We would love to
             feature your jazbaat!
           </p>
+          <p className={styles.text}>
+            <strong>Published Anthologies:</strong> Co-author in 50+ anthologies across various literary platforms. 
+          </p>
         </div>
       </div>
+      {lightbox.open && (
+        <GalleryLightbox
+          images={galleryImages}
+          index={lightbox.index}
+          onClose={closeLightbox}
+          onPrev={prev}
+          onNext={next}
+        />
+      )}
     </section>
   );
 }

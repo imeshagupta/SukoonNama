@@ -4,11 +4,15 @@ export default function Hero() {
   return (
     <section className={styles.hero}>
       <div className={styles.overlay}>
+        <p className={styles.kicker}>Words from the heart of Esha</p>
         <h1 className={styles.title}>SukoonNama</h1>
         <p className={styles.subtitle}>दिल की बात, लफ़्ज़ों के साथ।</p>
         <p className={styles.description}>
           एक अहसास, एक सफ़र... शायरी और जज़्बातों की दुनिया में आपका स्वागत है।
         </p>
+        <a href="#poems" className={styles.cta}>
+          Read Poems
+        </a>
       </div>
     </section>
   );

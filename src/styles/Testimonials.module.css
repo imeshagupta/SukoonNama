@@ -1,6 +1,6 @@
 .testimonials {
   background: radial-gradient(circle at top, #ffe6f0, #f3e5f5);
-  padding: clamp(3rem, 8vw, 5rem) clamp(1rem, 6vw, 4rem);
+  padding: clamp(3rem, 7vw, 4.5rem) clamp(1rem, 6vw, 4rem);
   font-family: "Playfair Display", serif;
   color: #3c1a45;
 }
@@ -17,7 +17,25 @@
   text-align: center;
   font-size: clamp(2rem, 6vw, 3rem);
   color: #a63a85;
-  margin: 0;
+  margin: 0 auto;
+  display: table;
+  position: relative;
+}
+
+.heading::after {
+  content: "";
+  display: block;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #d81b60, #8e24aa);
+  transition: width 0.3s ease;
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+}
+
+.heading:hover::after {
+  width: 100%;
 }
 
 .headerRow {
@@ -69,7 +87,7 @@
   inset: 0;
   background: radial-gradient(circle, rgba(74, 20, 140, 0.4), rgba(26, 9, 39, 0.8));
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: clamp(1rem, 4vw, 3rem) 1rem;
   overflow-y: auto;
@@ -79,14 +97,26 @@
 .modal {
   position: relative;
   width: min(720px, 100%);
+  animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .modalClose {
   position: absolute;
-  top: -0.6rem;
-  right: -0.6rem;
+  top: 0.8rem;
+  right: 0.8rem;
   border: none;
-  background: white;
+  background: rgba(106, 27, 154, 0.12);
   color: #6a1b9a;
   border-radius: 50%;
   width: 2.4rem;
@@ -94,9 +124,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 18px 40px rgba(74, 20, 140, 0.25);
   cursor: pointer;
   z-index: 2;
+}
+
+.modalClose:hover {
+  background: rgba(106, 27, 154, 0.22);
 }
 
 @media (max-width: 640px) {

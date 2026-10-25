@@ -58,7 +58,7 @@ const PoemModal = ({ poem, onClose, onLike, allPoems, onSelect }) => {
         </button>
         <div className={styles.content}>
           <div className={styles.header}>
-            <div>
+            <div className={styles.headerInfo}>
               <span className={styles.category}>{poem.category}</span>
               <h2 id="poem-title" className={styles.title}>
                 {poem.title}

@@ -2,7 +2,6 @@
   background: radial-gradient(circle at top, #f3e5f5, #e1bee7);
   color: #4a148c;
   font-family: "Playfair Display", serif;
-  margin-top: 3rem;
   border-top: 1px solid rgba(123, 31, 162, 0.18);
 }
 
@@ -16,8 +15,7 @@
 
 .brand {
   display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+  align-items: center;
 }
 
 .logo {
@@ -27,12 +25,6 @@
   color: #6a1b9a;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-}
-
-.tagline {
-  margin: 0;
-  color: #7e57c2;
-  font-style: italic;
 }
 
 .navGroup {

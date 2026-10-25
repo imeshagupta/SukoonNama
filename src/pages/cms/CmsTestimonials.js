@@ -13,6 +13,12 @@ import { db } from "../../firebase/firebase";
 import styles from "../../styles/cms/CmsCommon.module.css";
 import { FaTrashAlt, FaCheck, FaTimes, FaPlus } from "react-icons/fa";
 
+const staticTestimonials = [
+  { name: "Aarav Mehta", message: "SukoonNama ने मेरी ज़िन्दगी के उन पहलुओं को शब्द दिए, जिन्हें मैं कभी बयां नहीं कर पाया था।" },
+  { name: "Sonam Wadhwa", message: "हर शेर, हर ग़ज़ल दिल के बहुत करीब लगती है। जैसे किसी ने मेरी ही भावनाओं को लिख दिया हो।" },
+  { name: "Ravi Kapoor", message: "ये सिर्फ एक वेबसाइट नहीं, ये एहसासों का समंदर है। हर बार कुछ नया महसूस होता है।" },
+];
+
 const CmsTestimonials = () => {
   const [items, setItems] = useState([]);
   const [pending, setPending] = useState([]);
@@ -32,7 +38,15 @@ const CmsTestimonials = () => {
       setItems(all.filter((t) => t.approved === true));
       setPending(all.filter((t) => t.approved !== true));
     } catch (err) {
-      console.error(err);
+      try {
+        const q2 = query(collection(db, "testimonials"));
+        const snap2 = await getDocs(q2);
+        const all = snap2.docs.map((d) => ({ id: d.id, ...d.data() }));
+        setItems(all.filter((t) => t.approved === true));
+        setPending(all.filter((t) => t.approved !== true));
+      } catch (e) {
+        console.error(e);
+      }
     } finally {
       setFetching(false);
     }
@@ -133,27 +147,31 @@ const CmsTestimonials = () => {
 
       <div className={styles.sectionCard}>
         <div className={styles.sectionHeader}>
-          <h2>Approved ({items.length})</h2>
+          <h2>Approved ({items.length + staticTestimonials.length})</h2>
         </div>
-        {fetching ? (
-          <p className={styles.centerText}>Loading...</p>
-        ) : items.length === 0 ? (
-          <p className={styles.centerText}>No approved testimonials</p>
-        ) : (
-          <div className={styles.cardGrid}>
-            {items.map((t) => (
-              <div key={t.id} className={styles.reviewCard}>
-                <p className={styles.reviewText}>"{t.message}"</p>
-                <p className={styles.reviewName}>- {t.name}</p>
-                <div className={styles.reviewActions}>
-                  <button className={styles.rejectBtn} onClick={() => remove(t.id)}>
-                    <FaTrashAlt /> Delete
-                  </button>
-                </div>
+        <div className={styles.cardGrid}>
+          {staticTestimonials.map((t, idx) => (
+            <div key={`static-${idx}`} className={styles.reviewCard}>
+              <p className={styles.reviewText}>"{t.message}"</p>
+              <p className={styles.reviewName}>- {t.name}</p>
+              <div className={styles.reviewActions}>
+                <span className={styles.staticTag}>Static</span>
               </div>
-            ))}
-          </div>
-        )}
+            </div>
+          ))}
+          {items.map((t) => (
+            <div key={t.id} className={styles.reviewCard}>
+              <p className={styles.reviewText}>"{t.message || t.feedback}"</p>
+              <p className={styles.reviewName}>- {t.name}</p>
+              <div className={styles.reviewActions}>
+                <button className={styles.rejectBtn} onClick={() => remove(t.id)}>
+                  <FaTrashAlt /> Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+        {fetching && <p className={styles.centerText}>Loading...</p>}
       </div>
 
       {showModal && (

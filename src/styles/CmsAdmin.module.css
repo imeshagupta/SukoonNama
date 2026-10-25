@@ -1,20 +1,21 @@
 .cmsWrapper {
   display: flex;
   min-height: 100vh;
-  background: radial-gradient(circle at top, #fff7fb, #f6f3ff);
-  font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle at top, #fff0f6, #f3e5f5);
+  font-family: "Playfair Display", serif;
 }
 
 .sidebar {
   width: 280px;
-  background: linear-gradient(180deg, #7b1fa2 0%, #4a148c 100%);
-  color: white;
+  background: linear-gradient(180deg, #f3e5f5 0%, #fce4ec 100%);
+  color: #4a2f63;
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 0;
   height: 100vh;
-  box-shadow: 40px 0 80px rgba(74, 20, 140, 0.25);
+  box-shadow: 40px 0 80px rgba(123, 31, 162, 0.12);
+  border-right: 1px solid rgba(206, 147, 216, 0.4);
 }
 
 .sidebarHeader {
@@ -32,16 +33,18 @@
 
 .logoIcon {
   font-size: 1.9rem;
+  color: #8e24aa;
 }
 
 .logoText {
   margin: 0;
   font-size: 1.4rem;
+  color: #7b1fa2;
 }
 
 .logoSub {
   margin: 0;
-  opacity: 0.8;
+  color: #7a5d86;
   font-size: 0.9rem;
 }
 
@@ -49,7 +52,7 @@
   display: none;
   border: none;
   background: transparent;
-  color: white;
+  color: #7b1fa2;
   font-size: 1.4rem;
 }
 
@@ -64,7 +67,7 @@
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: #5f3b70;
   text-decoration: none;
   padding: 0.8rem 1rem;
   border-radius: 12px;
@@ -72,8 +75,9 @@
 }
 
 .navItemActive {
-  background: rgba(255, 255, 255, 0.18);
-  color: white;
+  background: rgba(142, 36, 170, 0.16);
+  color: #7b1fa2;
+  font-weight: 500;
 }
 
 .navIcon {
@@ -93,16 +97,17 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  border: none;
-  background: rgba(255, 255, 255, 0.16);
-  color: white;
+  border: 1.5px solid rgba(123, 31, 162, 0.4);
+  background: transparent;
+  color: #7b1fa2;
   padding: 0.8rem 1rem;
   border-radius: 12px;
   cursor: pointer;
 }
 
 .footerBtnDanger {
-  background: rgba(244, 67, 54, 0.9);
+  border-color: rgba(211, 47, 47, 0.6);
+  color: #d32f2f;
 }
 
 .mainArea {

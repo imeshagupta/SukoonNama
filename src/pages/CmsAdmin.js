@@ -3,7 +3,6 @@ import { Routes, Route, NavLink, useNavigate, useLocation } from "react-router-d
 import styles from "../styles/CmsAdmin.module.css";
 import {
   FaFeatherAlt,
-  FaList,
   FaComments,
   FaQuestionCircle,
   FaImages,

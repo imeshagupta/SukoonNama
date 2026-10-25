@@ -16,7 +16,6 @@ import {
   FaTrashAlt,
   FaHeart,
   FaRedo,
-  FaEdit,
   FaTimes,
 } from "react-icons/fa";
 

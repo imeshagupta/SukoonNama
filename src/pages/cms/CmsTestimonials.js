@@ -11,12 +11,24 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import styles from "../../styles/cms/CmsCommon.module.css";
-import { FaTrashAlt, FaCheck, FaTimes, FaPlus } from "react-icons/fa";
+import { FaTrashAlt, FaCheck, FaTimes, FaPlus, FaCloudUploadAlt } from "react-icons/fa";
 
-const staticTestimonials = [
-  { name: "Aarav Mehta", message: "SukoonNama ने मेरी ज़िन्दगी के उन पहलुओं को शब्द दिए, जिन्हें मैं कभी बयां नहीं कर पाया था।" },
-  { name: "Sonam Wadhwa", message: "हर शेर, हर ग़ज़ल दिल के बहुत करीब लगती है। जैसे किसी ने मेरी ही भावनाओं को लिख दिया हो।" },
-  { name: "Ravi Kapoor", message: "ये सिर्फ एक वेबसाइट नहीं, ये एहसासों का समंदर है। हर बार कुछ नया महसूस होता है।" },
+const defaultTestimonials = [
+  {
+    name: "Aarav Mehta",
+    message:
+      "SukoonNama ने मेरी ज़िन्दगी के उन पहलुओं को शब्द दिए, जिन्हें मैं कभी बयां नहीं कर पाया था।",
+  },
+  {
+    name: "Sonam Wadhwa",
+    message:
+      "हर शेर, हर ग़ज़ल दिल के बहुत करीब लगती है। जैसे किसी ने मेरी ही भावनाओं को लिख दिया हो।",
+  },
+  {
+    name: "Ravi Kapoor",
+    message:
+      "ये सिर्फ एक वेबसाइट नहीं, ये एहसासों का समंदर है। हर बार कुछ नया महसूस होता है।",
+  },
 ];
 
 const CmsTestimonials = () => {
@@ -28,6 +40,7 @@ const CmsTestimonials = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [actionMsg, setActionMsg] = useState("");
+  const [importing, setImporting] = useState(false);
 
   const fetchAll = async () => {
     setFetching(true);
@@ -107,6 +120,26 @@ const CmsTestimonials = () => {
     }
   };
 
+  const importDefaults = async () => {
+    setImporting(true);
+    try {
+      for (const t of defaultTestimonials) {
+        await addDoc(collection(db, "testimonials"), {
+          name: t.name,
+          message: t.message,
+          approved: true,
+          createdAt: new Date(),
+        });
+      }
+      fetchAll();
+      setActionMsg("Imported to Firestore");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setImporting(false);
+    }
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.pageHeader}>
@@ -114,9 +147,14 @@ const CmsTestimonials = () => {
           <h1 className={styles.pageTitle}>Testimonials</h1>
           <p className={styles.pageSub}>Approve, delete or add testimonials</p>
         </div>
-        <button className={styles.primaryBtn} onClick={() => setShowModal(true)}>
-          <FaPlus /> Add Testimonial
-        </button>
+        <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
+          <button className={styles.ghostBtn} onClick={importDefaults} disabled={importing}>
+            <FaCloudUploadAlt /> {importing ? "Importing..." : "Import Existing"}
+          </button>
+          <button className={styles.primaryBtn} onClick={() => setShowModal(true)}>
+            <FaPlus /> Add Testimonial
+          </button>
+        </div>
       </div>
 
       {actionMsg && <div className={styles.toast}>{actionMsg}</div>}
@@ -147,31 +185,27 @@ const CmsTestimonials = () => {
 
       <div className={styles.sectionCard}>
         <div className={styles.sectionHeader}>
-          <h2>Approved ({items.length + staticTestimonials.length})</h2>
+          <h2>Approved ({items.length})</h2>
         </div>
-        <div className={styles.cardGrid}>
-          {staticTestimonials.map((t, idx) => (
-            <div key={`static-${idx}`} className={styles.reviewCard}>
-              <p className={styles.reviewText}>"{t.message}"</p>
-              <p className={styles.reviewName}>- {t.name}</p>
-              <div className={styles.reviewActions}>
-                <span className={styles.staticTag}>Static</span>
+        {fetching ? (
+          <p className={styles.centerText}>Loading...</p>
+        ) : items.length === 0 ? (
+          <p className={styles.centerText}>No approved testimonials</p>
+        ) : (
+          <div className={styles.cardGrid}>
+            {items.map((t) => (
+              <div key={t.id} className={styles.reviewCard}>
+                <p className={styles.reviewText}>"{t.message || t.feedback}"</p>
+                <p className={styles.reviewName}>- {t.name}</p>
+                <div className={styles.reviewActions}>
+                  <button className={styles.rejectBtn} onClick={() => remove(t.id)}>
+                    <FaTrashAlt /> Delete
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-          {items.map((t) => (
-            <div key={t.id} className={styles.reviewCard}>
-              <p className={styles.reviewText}>"{t.message || t.feedback}"</p>
-              <p className={styles.reviewName}>- {t.name}</p>
-              <div className={styles.reviewActions}>
-                <button className={styles.rejectBtn} onClick={() => remove(t.id)}>
-                  <FaTrashAlt /> Delete
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-        {fetching && <p className={styles.centerText}>Loading...</p>}
+            ))}
+          </div>
+        )}
       </div>
 
       {showModal && (

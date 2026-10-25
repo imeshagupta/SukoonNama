@@ -105,13 +105,11 @@ const PoemsList = () => {
 
   return (
     <div className={styles.poemList} id="poems">
-      <h2 className={styles.heading}>SukoonNama Collection</h2>
-
       {poemOfTheDay && (
         <section className={styles.potd}>
           <div className={styles.potdHeader}>
-            <h3>Poem of the Day</h3>
-            <span>✍️ Handpicked for you</span>
+            <h3>Sukoon of the Day</h3>
+            <span>🌸 Handpicked for you</span>
           </div>
           <div className={styles.potdCard} onClick={() => openPoem(poemOfTheDay)}>
             <h4>{poemOfTheDay.title}</h4>

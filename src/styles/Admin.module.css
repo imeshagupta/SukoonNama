@@ -1,19 +1,23 @@
-.adminContainer {
-  padding: 2rem;
-  max-width: 600px;
-  margin: auto;
-  background: linear-gradient(to right, #fce4ec, #f3e5f5);
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+.pageWrapper {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #fff5fa, #f7f0ff);
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 4vw, 2rem);
+  font-family: "Poppins", sans-serif;
+}
+
+.adminShell {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
   animation: fadeIn 0.6s ease-in-out;
-  width: 90%;
-  box-sizing: border-box;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -21,118 +25,333 @@
   }
 }
 
-.heading {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: white;
+  border-radius: 18px;
+  padding: clamp(1rem, 3vw, 1.6rem) clamp(1.2rem, 4vw, 2.2rem);
+  box-shadow: 0 30px 60px rgba(123, 31, 162, 0.12);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brandIcon {
+  font-size: 2.2rem;
+  color: #8e24aa;
+}
+
+.brandTitle {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 2rem);
   color: #7b1fa2;
-  text-align: center;
 }
 
-.formInput,
-.formTextarea {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  margin-bottom: 1rem;
-  border: 1.5px solid #ce93d8;
-  border-radius: 10px;
-  font-size: 1rem;
-  background-color: #fff;
-  transition: border-color 0.3s ease;
-  box-sizing: border-box;
+.brandSub {
+  margin: 0;
+  color: #7a5d86;
+  font-size: 0.98rem;
 }
-select.formInput {
+
+.logoutTop {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  background: linear-gradient(90deg, #f06292, #d81b60);
+  color: white;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 16px 40px rgba(216, 27, 96, 0.18);
+}
+
+.tabs {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.tabBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  background: transparent;
+  color: #7a5d86;
+  padding: 0.7rem 1.6rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.activeTab {
+  background: white;
+  color: #7b1fa2;
+  box-shadow: 0 20px 50px rgba(123, 31, 162, 0.14);
+}
+
+.card {
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 40px 80px rgba(123, 31, 162, 0.16);
+  overflow: hidden;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: clamp(1.4rem, 4vw, 2.2rem) clamp(1.4rem, 5vw, 3rem) 0;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  color: #7b1fa2;
+}
+
+.cardSub {
+  margin: 0.4rem 0 0;
+  color: #7a5d86;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 3vw, 1.6rem);
+  padding: clamp(1rem, 3vw, 1.8rem) clamp(1.4rem, 5vw, 3rem) clamp(1.8rem, 5vw, 3rem);
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.label {
+  font-weight: 500;
+  color: #5f3b70;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  border: 1.5px solid rgba(142, 36, 170, 0.25);
+  border-radius: 14px;
+  padding: 0.8rem 1.1rem;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  background: #fff;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.select {
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath fill='%237b1fa2' d='M7 10L0 0h14z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath fill='%238e24aa' d='M7 10L0 0h14z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 1rem center;
+  background-position: right 1.2rem center;
   background-size: 0.8rem;
-  cursor: pointer;
 }
 
-.formInput:focus,
-.formTextarea:focus {
+.input:focus,
+.select:focus,
+.textarea:focus {
   outline: none;
-  border-color: #ba68c8;
-  box-shadow: 0 0 5px rgba(186, 104, 200, 0.5);
+  border-color: rgba(142, 36, 170, 0.9);
+  box-shadow: 0 0 0 4px rgba(142, 36, 170, 0.08);
 }
 
-.submitButton {
-  background: linear-gradient(to right, #ba68c8, #f06292);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+.textarea {
+  resize: vertical;
+  min-height: 220px;
+  line-height: 1.9;
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
   border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  width: 100%;
-  margin-top: 0.5rem;
-}
-
-.submitButton:hover {
-  transform: scale(1.03);
-}
-
-.logoutButton {
-  margin-top: 1.5rem;
-  background: #d32f2f;
+  background: linear-gradient(90deg, #8e24aa, #f06292);
   color: white;
-  padding: 0.6rem 1rem;
-  border: none;
-  border-radius: 8px;
+  padding: 0.9rem 2.6rem;
+  border-radius: 999px;
   cursor: pointer;
-  width: 100%;
-  transition: background-color 0.2s ease;
-  box-sizing: border-box;
+  font-weight: 500;
+  box-shadow: 0 24px 50px rgba(142, 36, 170, 0.2);
 }
 
-.logoutButton:hover {
-  background-color: #b71c1c;
+.primaryBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
-.successMessage {
-  color: #388e3c;
-  font-weight: bold;
-  margin-top: 1rem;
+.alertSuccess {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: rgba(56, 142, 60, 0.12);
+  color: #2e7d32;
+  padding: 0.9rem 1.6rem;
+  border-radius: 999px;
   text-align: center;
 }
 
-@media (max-width: 600px) {
-  .adminContainer {
-    padding: 1.2rem;
-    width: 95%;
-  }
+.toast {
+  margin: 1rem clamp(1.4rem, 5vw, 3rem) 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(123, 31, 162, 0.12);
+  color: #7b1fa2;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+}
 
-  .heading {
-    font-size: 1.6rem;
-  }
+.ghostBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1.5px solid rgba(142, 36, 170, 0.4);
+  background: transparent;
+  color: #7b1fa2;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
 
-  .submitButton,
-  .logoutButton {
-    font-size: 0.95rem;
-    padding: 0.6rem 1.2rem;
-  }
+.loadingText,
+.emptyText {
+  text-align: center;
+  color: #7a5d86;
+  padding: 2rem;
+}
 
-  .formInput,
-  .formTextarea {
-    font-size: 0.95rem;
-    padding: 0.7rem 1rem;
+.poemList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.6rem clamp(1.4rem, 5vw, 3rem) clamp(2rem, 5vw, 3rem);
+}
+
+.poemItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  border: 1.5px solid rgba(206, 147, 216, 0.4);
+  border-radius: 18px;
+  padding: clamp(1rem, 3vw, 1.6rem);
+}
+
+.poemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex: 1;
+  min-width: 260px;
+}
+
+.poemMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.categoryTag {
+  background: rgba(142, 36, 170, 0.12);
+  color: #7b1fa2;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+.likesTag {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #d81b60;
+}
+
+.poemTitle {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  color: #4a2f63;
+}
+
+.poemPreview {
+  margin: 0;
+  color: #6b4f7c;
+  line-height: 1.8;
+}
+
+.poemActions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1.5px solid rgba(123, 31, 162, 0.4);
+  background: transparent;
+  color: #7b1fa2;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.deleteBtn {
+  border-color: rgba(211, 47, 47, 0.6);
+  color: #d32f2f;
+}
+
+@media (max-width: 900px) {
+  .formGrid {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 375px) {
-  .heading {
-    font-size: 1.4rem;
+@media (max-width: 640px) {
+  .topBar {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .formInput,
-  .formTextarea {
-    font-size: 0.9rem;
+  .poemItem {
+    flex-direction: column;
   }
 
-  .submitButton,
-  .logoutButton {
-    font-size: 0.9rem;
+  .poemActions {
+    width: 100%;
+  }
+
+  .actionBtn {
+    flex: 1;
+    justify-content: center;
   }
 }

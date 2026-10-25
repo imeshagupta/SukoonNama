@@ -28,6 +28,8 @@ const CmsPoems = () => {
   const [category, setCategory] = useState("Love");
   const [loading, setLoading] = useState(false);
   const [actionMsg, setActionMsg] = useState("");
+  const [filterCategory, setFilterCategory] = useState("All");
+  const [sortBy, setSortBy] = useState("newest");
 
   const fetchPoems = async () => {
     setFetching(true);
@@ -119,7 +121,45 @@ const CmsPoems = () => {
 
       <div className={styles.tableCard}>
         <div className={styles.tableHeader}>
-          <span>All Poems ({poems.length})</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+            <span>All Poems ({poems.length})</span>
+            <select
+              value={filterCategory}
+              onChange={(e) => setFilterCategory(e.target.value)}
+              style={{
+                border: "1.5px solid rgba(142, 36, 170, 0.3)",
+                borderRadius: "999px",
+                padding: "0.5rem 1rem",
+              }}
+            >
+              <option value="All">All Categories</option>
+              <option value="Love">Love</option>
+              <option value="Sad">Sad</option>
+              <option value="Motivational">Motivational</option>
+              <option value="Devotional">Devotional</option>
+              <option value="Childhood">Childhood</option>
+              <option value="Festival">Festival</option>
+              <option value="Life">Life</option>
+              <option value="Humor">Humor</option>
+              <option value="Friendship">Friendship</option>
+              <option value="Parents">Parents</option>
+              <option value="Trust">Trust</option>
+            </select>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              style={{
+                border: "1.5px solid rgba(142, 36, 170, 0.3)",
+                borderRadius: "999px",
+                padding: "0.5rem 1rem",
+              }}
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="likes">Most Liked</option>
+              <option value="title">Title A-Z</option>
+            </select>
+          </div>
         </div>
         {fetching ? (
           <p className={styles.centerText}>Loading...</p>
@@ -138,7 +178,25 @@ const CmsPoems = () => {
                 </tr>
               </thead>
               <tbody>
-                {poems.map((p) => (
+                {poems
+                  .filter((p) => filterCategory === "All" || p.category === filterCategory)
+                  .sort((a, b) => {
+                    if (sortBy === "oldest") {
+                      const ta = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : 0;
+                      const tb = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : 0;
+                      return ta - tb;
+                    }
+                    if (sortBy === "likes") {
+                      return (b.likes || 0) - (a.likes || 0);
+                    }
+                    if (sortBy === "title") {
+                      return (a.title || "").localeCompare(b.title || "");
+                    }
+                    const ta = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : 0;
+                    const tb = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : 0;
+                    return tb - ta;
+                  })
+                  .map((p) => (
                   <tr key={p.id}>
                     <td>{p.title || "Untitled"}</td>
                     <td>

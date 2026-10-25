@@ -7,15 +7,14 @@
 
 .sidebar {
   width: 280px;
-  background: white;
-  color: #4a2f63;
+  background: linear-gradient(180deg, #7b1fa2 0%, #4a148c 100%);
+  color: white;
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 0;
   height: 100vh;
-  box-shadow: 30px 0 60px rgba(123, 31, 162, 0.1);
-  border-right: 1px solid rgba(206, 147, 216, 0.3);
+  box-shadow: 40px 0 80px rgba(74, 20, 140, 0.25);
 }
 
 .sidebarHeader {
@@ -33,18 +32,16 @@
 
 .logoIcon {
   font-size: 1.9rem;
-  color: #8e24aa;
 }
 
 .logoText {
   margin: 0;
   font-size: 1.4rem;
-  color: #7b1fa2;
 }
 
 .logoSub {
   margin: 0;
-  color: #7a5d86;
+  opacity: 0.8;
   font-size: 0.9rem;
 }
 
@@ -67,7 +64,7 @@
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  color: #5f3b70;
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
   padding: 0.8rem 1rem;
   border-radius: 12px;
@@ -75,9 +72,8 @@
 }
 
 .navItemActive {
-  background: linear-gradient(90deg, rgba(142, 36, 170, 0.16), rgba(240, 98, 146, 0.12));
-  color: #7b1fa2;
-  font-weight: 600;
+  background: rgba(255, 255, 255, 0.18);
+  color: white;
 }
 
 .navIcon {

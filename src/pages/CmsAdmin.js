@@ -11,12 +11,14 @@ import {
   FaSignOutAlt,
   FaBars,
   FaTimes,
+  FaTachometerAlt,
 } from "react-icons/fa";
 import CmsPoems from "./cms/CmsPoems";
 import CmsTestimonials from "./cms/CmsTestimonials";
 import CmsFaqs from "./cms/CmsFaqs";
 import CmsGallery from "./cms/CmsGallery";
 import CmsAbout from "./cms/CmsAbout";
+import CmsDashboard from "./cms/CmsDashboard";
 import { Helmet } from "react-helmet-async";
 
 const CmsAdmin = () => {
@@ -34,6 +36,7 @@ const CmsAdmin = () => {
   };
 
   const menuItems = [
+    { path: "/admin/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
     { path: "/admin/poems", label: "Poems", icon: <FaFeatherAlt /> },
     { path: "/admin/testimonials", label: "Testimonials", icon: <FaComments /> },
     { path: "/admin/faqs", label: "FAQs", icon: <FaQuestionCircle /> },
@@ -56,7 +59,7 @@ const CmsAdmin = () => {
             <FaFeatherAlt className={styles.logoIcon} />
             <div>
               <h2 className={styles.logoText}>SukoonNama</h2>
-              <p className={styles.logoSub}>CMS Panel</p>
+              <p className={styles.logoSub}>Content Management System</p>
             </div>
           </div>
           <button className={styles.closeBtn} onClick={() => setSidebarOpen(false)}>
@@ -98,7 +101,8 @@ const CmsAdmin = () => {
 
         <main className={styles.content}>
           <Routes>
-            <Route path="/" element={<CmsPoems />} />
+            <Route path="/" element={<CmsDashboard />} />
+            <Route path="/dashboard" element={<CmsDashboard />} />
             <Route path="/poems" element={<CmsPoems />} />
             <Route path="/testimonials" element={<CmsTestimonials />} />
             <Route path="/faqs" element={<CmsFaqs />} />

@@ -18,6 +18,7 @@ import {
   FaRedo,
   FaTimes,
 } from "react-icons/fa";
+import ConfirmModal from "../../components/ConfirmModal";
 
 const CmsPoems = () => {
   const [poems, setPoems] = useState([]);
@@ -30,6 +31,7 @@ const CmsPoems = () => {
   const [actionMsg, setActionMsg] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
+  const [confirm, setConfirm] = useState({ open: false, type: null, id: null });
 
   const fetchPoems = async () => {
     setFetching(true);
@@ -82,7 +84,6 @@ const CmsPoems = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Delete this poem?")) return;
     try {
       await deleteDoc(doc(db, "poems", id));
       setPoems((prev) => prev.filter((p) => p.id !== id));
@@ -93,7 +94,6 @@ const CmsPoems = () => {
   };
 
   const handleResetLikes = async (id) => {
-    if (!window.confirm("Reset likes to 0?")) return;
     try {
       await updateDoc(doc(db, "poems", id), { likes: 0 });
       setPoems((prev) => prev.map((p) => (p.id === id ? { ...p, likes: 0 } : p)));
@@ -197,29 +197,29 @@ const CmsPoems = () => {
                     return tb - ta;
                   })
                   .map((p) => (
-                  <tr key={p.id}>
-                    <td>{p.title || "Untitled"}</td>
-                    <td>
-                      <span className={styles.tag}>{p.category}</span>
-                    </td>
-                    <td className={styles.previewCell}>{truncate(p.poem)}</td>
-                    <td>
-                      <span className={styles.likeCount}>
-                        <FaHeart /> {p.likes || 0}
-                      </span>
-                    </td>
-                    <td>
-                      <div className={styles.actionGroup}>
-                        <button className={styles.iconBtn} onClick={() => handleResetLikes(p.id)} title="Reset likes">
-                          <FaRedo />
-                        </button>
-                        <button className={`${styles.iconBtn} ${styles.dangerBtn}`} onClick={() => handleDelete(p.id)} title="Delete">
-                          <FaTrashAlt />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                    <tr key={p.id}>
+                      <td>{p.title || "Untitled"}</td>
+                      <td>
+                        <span className={styles.tag}>{p.category}</span>
+                      </td>
+                      <td className={styles.previewCell}>{truncate(p.poem)}</td>
+                      <td>
+                        <span className={styles.likeCount}>
+                          <FaHeart /> {p.likes || 0}
+                        </span>
+                      </td>
+                      <td>
+                        <div className={styles.actionGroup}>
+                          <button className={styles.iconBtn} onClick={() => setConfirm({ open: true, type: "reset", id: p.id })} title="Reset likes">
+                            <FaRedo />
+                          </button>
+                          <button className={`${styles.iconBtn} ${styles.dangerBtn}`} onClick={() => setConfirm({ open: true, type: "delete", id: p.id })} title="Delete">
+                            <FaTrashAlt />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -272,6 +272,18 @@ const CmsPoems = () => {
           </div>
         </div>
       )}
+
+      <ConfirmModal
+        open={confirm.open}
+        title={confirm.type === "delete" ? "Delete Poem" : "Reset Likes"}
+        message={confirm.type === "delete" ? "Are you sure you want to delete this poem?" : "Reset likes for this poem to 0?"}
+        onCancel={() => setConfirm({ open: false, type: null, id: null })}
+        onConfirm={() => {
+          if (confirm.type === "delete") handleDelete(confirm.id);
+          if (confirm.type === "reset") handleResetLikes(confirm.id);
+          setConfirm({ open: false, type: null, id: null });
+        }}
+      />
     </div>
   );
 };

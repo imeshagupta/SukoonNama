@@ -94,10 +94,6 @@ const CmsAdmin = () => {
           <button className={styles.menuBtn} onClick={() => setSidebarOpen(true)}>
             <FaBars />
           </button>
-          <div className={styles.headerTitle}>
-            <h1>Content Management System</h1>
-            <p>Manage all content from one place</p>
-          </div>
         </header>
 
         <main className={styles.content}>

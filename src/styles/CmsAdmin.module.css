@@ -7,15 +7,15 @@
 
 .sidebar {
   width: 280px;
-  background: linear-gradient(180deg, #f3e5f5 0%, #fce4ec 100%);
+  background: white;
   color: #4a2f63;
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 0;
   height: 100vh;
-  box-shadow: 40px 0 80px rgba(123, 31, 162, 0.12);
-  border-right: 1px solid rgba(206, 147, 216, 0.4);
+  box-shadow: 30px 0 60px rgba(123, 31, 162, 0.1);
+  border-right: 1px solid rgba(206, 147, 216, 0.3);
 }
 
 .sidebarHeader {
@@ -75,9 +75,9 @@
 }
 
 .navItemActive {
-  background: rgba(142, 36, 170, 0.16);
+  background: linear-gradient(90deg, rgba(142, 36, 170, 0.16), rgba(240, 98, 146, 0.12));
   color: #7b1fa2;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .navIcon {

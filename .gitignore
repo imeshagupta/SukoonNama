@@ -13,6 +13,10 @@
 
 .env
 
+# firebase service account keys (never commit)
+serviceAccountKey*.json
+*serviceAccount*.json
+
 
 # misc
 .DS_Store

@@ -20,6 +20,8 @@ import {
 } from "react-icons/fa";
 import ConfirmModal from "../../components/ConfirmModal";
 
+const normalizePoem = (text) => (text || "").replace(/\s+/g, " ").trim();
+
 const CmsPoems = () => {
   const [poems, setPoems] = useState([]);
   const [fetching, setFetching] = useState(false);
@@ -60,12 +62,20 @@ const CmsPoems = () => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    if (!poem.trim()) return;
+    const text = poem.trim();
+    if (!text) return;
+
+    const key = normalizePoem(text);
+    if (poems.some((p) => normalizePoem(p.poem) === key)) {
+      setActionMsg("This poem already exists");
+      return;
+    }
+
     setLoading(true);
     try {
       await addDoc(collection(db, "poems"), {
         title: title.trim() || null,
-        poem,
+        poem: text,
         category,
         createdAt: new Date(),
         likes: 0,

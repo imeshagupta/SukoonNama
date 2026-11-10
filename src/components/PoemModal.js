@@ -15,9 +15,13 @@ const PoemModal = ({ poem, onClose, onLike, allPoems, onSelect }) => {
     };
   }, [onClose]);
 
+  const shareTitle = poem.title || "SukoonNama";
+
   const handleCopy = async () => {
     try {
-      const text = `${poem.title}\n\n${poem.poem}\n\n- SukoonNama by Esha Gupta`;
+      const text = [poem.title, poem.poem, "- SukoonNama by Esha Gupta"]
+        .filter(Boolean)
+        .join("\n\n");
       await navigator.clipboard.writeText(text);
       alert("Poem copied to clipboard!");
     } catch (err) {
@@ -26,11 +30,13 @@ const PoemModal = ({ poem, onClose, onLike, allPoems, onSelect }) => {
   };
 
   const handleShare = async () => {
-    const text = `${poem.title}\n\n${poem.poem}\n\nRead more on SukoonNama`;
+    const text = [poem.title, poem.poem, "Read more on SukoonNama"]
+      .filter(Boolean)
+      .join("\n\n");
     const url = window.location.href;
     if (navigator.share) {
       try {
-        await navigator.share({ title: poem.title, text, url });
+        await navigator.share({ title: shareTitle, text, url });
       } catch (err) {
         // ignore
       }
@@ -60,9 +66,11 @@ const PoemModal = ({ poem, onClose, onLike, allPoems, onSelect }) => {
           <div className={styles.header}>
             <div className={styles.headerInfo}>
               <span className={styles.category}>{poem.category}</span>
-              <h2 id="poem-title" className={styles.title}>
-                {poem.title}
-              </h2>
+              {poem.title && (
+                <h2 id="poem-title" className={styles.title}>
+                  {poem.title}
+                </h2>
+              )}
             </div>
             <button className={styles.likeLarge} onClick={onLike} aria-label="Like poem">
               <FaHeart /> {poem.likes || 0}
@@ -89,7 +97,7 @@ const PoemModal = ({ poem, onClose, onLike, allPoems, onSelect }) => {
                   onClick={() => onSelect(r)}
                 >
                   <div>
-                    <h4>{r.title}</h4>
+                    {r.title && <h4>{r.title}</h4>}
                     <p>{r.poem?.split("\n").slice(0, 2).join(" ")}</p>
                   </div>
                   <FaArrowRight />

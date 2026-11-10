@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import styles from "../../styles/cms/CmsCommon.module.css";
-import { FaFeatherAlt, FaComments, FaQuestionCircle, FaImages, FaClock } from "react-icons/fa";
+import { FaFeatherAlt, FaComments, FaQuestionCircle, FaClock } from "react-icons/fa";
 
 const CmsDashboard = () => {
   const [stats, setStats] = useState({
@@ -12,6 +12,8 @@ const CmsDashboard = () => {
     faqs: 0,
   });
   const [recent, setRecent] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +44,11 @@ const CmsDashboard = () => {
         setRecent(recentItems);
       } catch (err) {
         console.error(err);
+        setError(
+          "Firestore se data load nahi hua. Firebase config (.env) aur security rules check karo."
+        );
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -52,9 +59,10 @@ const CmsDashboard = () => {
       <div className={styles.pageHeader}>
         <div>
           <h1 className={styles.pageTitle}>Dashboard</h1>
-          <p className={styles.pageSub}>Content Management System • All at one place</p>
         </div>
       </div>
+
+      {error && <div className={styles.errorBanner}>{error}</div>}
 
       <div className={styles.statGrid}>
         <div className={styles.statCard}>
@@ -63,7 +71,7 @@ const CmsDashboard = () => {
           </div>
           <div>
             <p className={styles.statLabel}>Total Poems</p>
-            <p className={styles.statValue}>{stats.poems}</p>
+            <p className={styles.statValue}>{loading ? "…" : stats.poems}</p>
           </div>
         </div>
         <div className={styles.statCard}>
@@ -72,7 +80,7 @@ const CmsDashboard = () => {
           </div>
           <div>
             <p className={styles.statLabel}>Approved Testimonials</p>
-            <p className={styles.statValue}>{stats.testimonials}</p>
+            <p className={styles.statValue}>{loading ? "…" : stats.testimonials}</p>
           </div>
         </div>
         <div className={styles.statCard}>
@@ -81,7 +89,7 @@ const CmsDashboard = () => {
           </div>
           <div>
             <p className={styles.statLabel}>Pending Testimonials</p>
-            <p className={styles.statValue}>{stats.pending}</p>
+            <p className={styles.statValue}>{loading ? "…" : stats.pending}</p>
           </div>
         </div>
         <div className={styles.statCard}>
@@ -90,16 +98,7 @@ const CmsDashboard = () => {
           </div>
           <div>
             <p className={styles.statLabel}>FAQs</p>
-            <p className={styles.statValue}>{stats.faqs}</p>
-          </div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statIconWrap}>
-            <FaImages />
-          </div>
-          <div>
-            <p className={styles.statLabel}>Certificates/Gallery</p>
-            <p className={styles.statValue}>15</p>
+            <p className={styles.statValue}>{loading ? "…" : stats.faqs}</p>
           </div>
         </div>
       </div>

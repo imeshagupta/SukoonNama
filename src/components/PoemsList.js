@@ -3,7 +3,18 @@ import { collection, getDocs, query, orderBy, doc, updateDoc, increment } from "
 import { db } from "../firebase/firebase";
 import styles from "../styles/PoemsList.module.css";
 import PoemModal from "./PoemModal";
-import { FaHeart, FaSearch } from "react-icons/fa";
+import { FaHeart, FaSearch, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
+const POEMS_PER_PAGE = 6;
+
+const getPoemTime = (createdAt) => {
+  if (!createdAt) return 0;
+  if (typeof createdAt.toDate === "function") return createdAt.toDate().getTime();
+  if (createdAt instanceof Date) return createdAt.getTime();
+  if (typeof createdAt.seconds === "number") return createdAt.seconds * 1000;
+  const time = new Date(createdAt).getTime();
+  return Number.isNaN(time) ? 0 : time;
+};
 
 const PoemsList = () => {
   const [poems, setPoems] = useState([]);
@@ -12,6 +23,8 @@ const PoemsList = () => {
   const [selectedPoem, setSelectedPoem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [poemOfTheDay, setPoemOfTheDay] = useState(null);
+  const [sortOrder, setSortOrder] = useState("newest");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchPoems = async () => {
@@ -19,10 +32,17 @@ const PoemsList = () => {
         const poemsCollection = collection(db, "poems");
         const q = query(poemsCollection, orderBy("createdAt", "desc"));
         const snapshot = await getDocs(q);
-        const poemsList = snapshot.docs.map((docSnap) => ({
+        const rawPoems = snapshot.docs.map((docSnap) => ({
           id: docSnap.id,
           ...docSnap.data(),
         }));
+        const seen = new Set();
+        const poemsList = rawPoems.filter((poem) => {
+          const key = (poem.poem || "").replace(/\s+/g, " ").trim();
+          if (!key || seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
         setPoems(poemsList);
         if (poemsList.length > 0) {
           const today = new Date().toDateString();
@@ -47,6 +67,10 @@ const PoemsList = () => {
 
     fetchPoems();
   }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchTerm, sortOrder]);
 
   const categories = [
     "All",
@@ -82,6 +106,43 @@ const PoemsList = () => {
     );
   }
 
+  const sortedPoems = [...filteredPoems].sort((a, b) => {
+    const timeA = getPoemTime(a.createdAt);
+    const timeB = getPoemTime(b.createdAt);
+    return sortOrder === "newest" ? timeB - timeA : timeA - timeB;
+  });
+
+  const totalPages = Math.ceil(sortedPoems.length / POEMS_PER_PAGE) || 1;
+  const safePage = Math.min(Math.max(currentPage, 1), totalPages);
+  const paginatedPoems = sortedPoems.slice(
+    (safePage - 1) * POEMS_PER_PAGE,
+    safePage * POEMS_PER_PAGE
+  );
+
+  const goToPage = (page) => {
+    setCurrentPage(page);
+    document
+      .getElementById("poems")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const pageNumbers = () => {
+    if (totalPages <= 5) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    let start = Math.max(1, safePage - 2);
+    let end = start + 4;
+    if (end > totalPages) {
+      end = totalPages;
+      start = end - 4;
+    }
+    const pages = [];
+    if (start > 1) pages.push(1, "start-ellipsis");
+    for (let i = start; i <= end; i += 1) pages.push(i);
+    if (end < totalPages) pages.push("end-ellipsis", totalPages);
+    return pages;
+  };
+
   const handleLike = async (poem) => {
     try {
       const ref = doc(db, "poems", poem.id);
@@ -112,7 +173,7 @@ const PoemsList = () => {
             <span>🌸 Handpicked for you</span>
           </div>
           <div className={styles.potdCard} onClick={() => openPoem(poemOfTheDay)}>
-            <h4>{poemOfTheDay.title}</h4>
+            {poemOfTheDay.title && <h4>{poemOfTheDay.title}</h4>}
             <p className={styles.potdPreview}>{poemOfTheDay.poem?.split("\n").slice(0, 4).join("\n")}...</p>
             <div className={styles.potdFooter}>
               <span>{poemOfTheDay.category}</span>
@@ -130,16 +191,27 @@ const PoemsList = () => {
         </section>
       )}
 
-      <div className={styles.searchWrap}>
-        <FaSearch className={styles.searchIcon} />
-        <input
-          type="text"
-          className={styles.searchInput}
-          placeholder="Search poems by title or content..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          aria-label="Search poems"
-        />
+      <div className={styles.controlsRow}>
+        <div className={styles.searchWrap}>
+          <FaSearch className={styles.searchIcon} />
+          <input
+            type="text"
+            className={styles.searchInput}
+            placeholder="Search poems by title or content..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            aria-label="Search poems"
+          />
+        </div>
+        <select
+          className={styles.sortSelect}
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          aria-label="Sort poems"
+        >
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+        </select>
       </div>
 
       <div className={styles.categoryBar}>
@@ -169,45 +241,89 @@ const PoemsList = () => {
           <p className={styles.emptyHint}>Try a different category or clear your search.</p>
         </div>
       ) : (
-        filteredPoems.map((poem) => {
-          const categoryClass = `category-${
-            poem.category?.toLowerCase() || "default"
-          }`;
-          return (
-            <article
-              key={poem.id}
-              className={`${styles.poemCard} ${styles[categoryClass]}`}
-              onClick={() => openPoem(poem)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  openPoem(poem);
-                }
-              }}
-              aria-label={`Open poem ${poem.title}`}
-            >
-              <div className={styles.cardHeader}>
-                <h3>{poem.title}</h3>
-                <button
-                  className={styles.likeBtn}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLike(poem);
-                  }}
-                  aria-label="Like poem"
-                >
-                  <FaHeart /> {poem.likes || 0}
-                </button>
-              </div>
-              <p className={styles.preview}>{poem.poem}</p>
-              {poem.category && (
-                <p className={styles.categoryLabel}>{poem.category}</p>
-              )}
-            </article>
-          );
-        })
+        <div className={styles.poemGrid}>
+          {paginatedPoems.map((poem) => {
+            const categoryClass = `category-${
+              poem.category?.toLowerCase() || "default"
+            }`;
+            return (
+              <article
+                key={poem.id}
+                className={`${styles.poemCard} ${styles[categoryClass]}`}
+                onClick={() => openPoem(poem)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    openPoem(poem);
+                  }
+                }}
+                aria-label={`Open poem ${poem.title}`}
+              >
+                <div className={styles.cardHeader}>
+                  {poem.title && <h3>{poem.title}</h3>}
+                  <button
+                    className={styles.likeBtn}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLike(poem);
+                    }}
+                    aria-label="Like poem"
+                  >
+                    <FaHeart /> {poem.likes || 0}
+                  </button>
+                </div>
+                <p className={styles.preview}>{poem.poem}</p>
+                {poem.category && (
+                  <p className={styles.categoryLabel}>{poem.category}</p>
+                )}
+              </article>
+            );
+          })}
+        </div>
+      )}
+
+      {!loading && filteredPoems.length > 0 && totalPages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            className={styles.pageBtn}
+            onClick={() => goToPage(safePage - 1)}
+            disabled={safePage === 1}
+            aria-label="Previous page"
+          >
+            <FaChevronLeft />
+          </button>
+
+          {pageNumbers().map((page) =>
+            typeof page === "number" ? (
+              <button
+                key={page}
+                className={`${styles.pageBtn} ${
+                  page === safePage ? styles.pageBtnActive : ""
+                }`}
+                onClick={() => goToPage(page)}
+                aria-label={`Go to page ${page}`}
+                aria-current={page === safePage ? "page" : undefined}
+              >
+                {page}
+              </button>
+            ) : (
+              <span key={page} className={styles.pageEllipsis}>
+                …
+              </span>
+            )
+          )}
+
+          <button
+            className={styles.pageBtn}
+            onClick={() => goToPage(safePage + 1)}
+            disabled={safePage === totalPages}
+            aria-label="Next page"
+          >
+            <FaChevronRight />
+          </button>
+        </div>
       )}
 
       {selectedPoem && (

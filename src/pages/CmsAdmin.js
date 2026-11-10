@@ -5,7 +5,6 @@ import {
   FaFeatherAlt,
   FaComments,
   FaQuestionCircle,
-  FaImages,
   FaInfoCircle,
   FaHome,
   FaSignOutAlt,
@@ -16,7 +15,6 @@ import {
 import CmsPoems from "./cms/CmsPoems";
 import CmsTestimonials from "./cms/CmsTestimonials";
 import CmsFaqs from "./cms/CmsFaqs";
-import CmsGallery from "./cms/CmsGallery";
 import CmsAbout from "./cms/CmsAbout";
 import CmsDashboard from "./cms/CmsDashboard";
 import { Helmet } from "react-helmet-async";
@@ -40,7 +38,6 @@ const CmsAdmin = () => {
     { path: "/admin/poems", label: "Poems", icon: <FaFeatherAlt /> },
     { path: "/admin/testimonials", label: "Testimonials", icon: <FaComments /> },
     { path: "/admin/faqs", label: "FAQs", icon: <FaQuestionCircle /> },
-    { path: "/admin/gallery", label: "Certificates/Gallery", icon: <FaImages /> },
     { path: "/admin/about", label: "About", icon: <FaInfoCircle /> },
   ];
 
@@ -59,7 +56,7 @@ const CmsAdmin = () => {
             <FaFeatherAlt className={styles.logoIcon} />
             <div>
               <h2 className={styles.logoText}>SukoonNama</h2>
-              <p className={styles.logoSub}>Content Management System</p>
+              
             </div>
           </div>
           <button className={styles.closeBtn} onClick={() => setSidebarOpen(false)}>
@@ -106,7 +103,6 @@ const CmsAdmin = () => {
             <Route path="/poems" element={<CmsPoems />} />
             <Route path="/testimonials" element={<CmsTestimonials />} />
             <Route path="/faqs" element={<CmsFaqs />} />
-            <Route path="/gallery" element={<CmsGallery />} />
             <Route path="/about" element={<CmsAbout />} />
           </Routes>
         </main>

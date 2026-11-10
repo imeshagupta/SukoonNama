@@ -1,0 +1,27 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Public content: readable by everyone.
+    match /poems/{poemId} {
+      allow read: if true;
+      // Visitors may only bump the like counter, not edit content.
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes']);
+    }
+
+    match /faqs/{faqId} {
+      allow read: if true;
+    }
+
+    match /testimonials/{testimonialId} {
+      allow read: if true;
+    }
+
+    match /testimonials_pending/{testimonialId} {
+      allow read: if true;
+      allow create: if true;
+    }
+
+    // Admin/CMS writes stay blocked until Firebase Auth is added.
+  }
+}

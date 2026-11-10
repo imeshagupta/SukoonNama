@@ -5,8 +5,10 @@ service cloud.firestore {
     // Public content: readable by everyone.
     match /poems/{poemId} {
       allow read: if true;
-      // Visitors may only bump the like counter, not edit content.
+      // Visitors may bump the like counter.
       allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes']);
+      // Admin panel may edit content (CMS has no Firebase Auth yet).
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['title', 'poem', 'category', 'likes']);
     }
 
     match /faqs/{faqId} {

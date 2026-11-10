@@ -17,6 +17,7 @@ import {
   FaHeart,
   FaRedo,
   FaTimes,
+  FaEdit,
 } from "react-icons/fa";
 import ConfirmModal from "../../components/ConfirmModal";
 
@@ -33,6 +34,7 @@ const CmsPoems = () => {
   const [actionMsg, setActionMsg] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
+  const [editingId, setEditingId] = useState(null);
   const [confirm, setConfirm] = useState({ open: false, type: null, id: null });
 
   const fetchPoems = async () => {
@@ -60,32 +62,67 @@ const CmsPoems = () => {
     }
   }, [actionMsg]);
 
-  const handleAdd = async (e) => {
+  const resetForm = () => {
+    setTitle("");
+    setPoem("");
+    setCategory("Love");
+    setEditingId(null);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    resetForm();
+  };
+
+  const openAdd = () => {
+    resetForm();
+    setShowModal(true);
+  };
+
+  const openEdit = (p) => {
+    setEditingId(p.id);
+    setTitle(p.title || "");
+    setPoem(p.poem || "");
+    setCategory(p.category || "Love");
+    setShowModal(true);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const text = poem.trim();
     if (!text) return;
 
     const key = normalizePoem(text);
-    if (poems.some((p) => normalizePoem(p.poem) === key)) {
+    if (poems.some((p) => p.id !== editingId && normalizePoem(p.poem) === key)) {
       setActionMsg("This poem already exists");
       return;
     }
 
     setLoading(true);
     try {
-      await addDoc(collection(db, "poems"), {
+      const payload = {
         title: title.trim() || null,
         poem: text,
         category,
-        createdAt: new Date(),
-        likes: 0,
-      });
-      setTitle("");
-      setPoem("");
-      setCategory("Love");
-      setShowModal(false);
+      };
+
+      if (editingId) {
+        await updateDoc(doc(db, "poems", editingId), payload);
+        setPoems((prev) =>
+          prev.map((p) => (p.id === editingId ? { ...p, ...payload } : p))
+        );
+        setActionMsg("Poem updated successfully");
+      } else {
+        await addDoc(collection(db, "poems"), {
+          ...payload,
+          createdAt: new Date(),
+          likes: 0,
+        });
+        setActionMsg("Poem added successfully");
+      }
+
+      closeModal();
       fetchPoems();
-      setActionMsg("Poem added successfully");
     } catch (err) {
       console.error(err);
     } finally {
@@ -120,9 +157,9 @@ const CmsPoems = () => {
       <div className={styles.pageHeader}>
         <div>
           <h1 className={styles.pageTitle}>Poems</h1>
-          <p className={styles.pageSub}>Add, delete or reset likes for poems</p>
+          <p className={styles.pageSub}>Add, edit, delete or reset likes for poems</p>
         </div>
-        <button className={styles.primaryBtn} onClick={() => setShowModal(true)}>
+        <button className={styles.primaryBtn} onClick={openAdd}>
           <FaPlus /> Add Poem
         </button>
       </div>
@@ -220,6 +257,9 @@ const CmsPoems = () => {
                       </td>
                       <td>
                         <div className={styles.actionGroup}>
+                          <button className={styles.iconBtn} onClick={() => openEdit(p)} title="Edit">
+                            <FaEdit />
+                          </button>
                           <button className={styles.iconBtn} onClick={() => setConfirm({ open: true, type: "reset", id: p.id })} title="Reset likes">
                             <FaRedo />
                           </button>
@@ -237,15 +277,15 @@ const CmsPoems = () => {
       </div>
 
       {showModal && (
-        <div className={styles.modalBackdrop} onClick={() => setShowModal(false)}>
+        <div className={styles.modalBackdrop} onClick={closeModal}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modalHeader}>
-              <h2>Add New Poem</h2>
-              <button className={styles.closeModal} onClick={() => setShowModal(false)}>
+              <h2>{editingId ? "Edit Poem" : "Add New Poem"}</h2>
+              <button className={styles.closeModal} onClick={closeModal}>
                 <FaTimes />
               </button>
             </div>
-            <form onSubmit={handleAdd} className={styles.modalForm}>
+            <form onSubmit={handleSubmit} className={styles.modalForm}>
               <div className={styles.formRow}>
                 <label>Title (Optional)</label>
                 <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter title" />
@@ -271,11 +311,11 @@ const CmsPoems = () => {
                 <textarea value={poem} onChange={(e) => setPoem(e.target.value)} rows={10} required placeholder="Write poem..." />
               </div>
               <div className={styles.modalActions}>
-                <button type="button" className={styles.ghostBtn} onClick={() => setShowModal(false)}>
+                <button type="button" className={styles.ghostBtn} onClick={closeModal}>
                   Cancel
                 </button>
                 <button type="submit" className={styles.primaryBtn} disabled={loading}>
-                  {loading ? "Saving..." : "Save Poem"}
+                  {loading ? "Saving..." : editingId ? "Update Poem" : "Save Poem"}
                 </button>
               </div>
             </form>

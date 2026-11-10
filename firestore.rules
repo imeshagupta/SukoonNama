@@ -7,8 +7,10 @@ service cloud.firestore {
       allow read: if true;
       // Visitors may bump the like counter.
       allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes']);
-      // Admin panel may edit content (CMS has no Firebase Auth yet).
+      // Admin panel may add, edit and delete poems (CMS has no Firebase Auth yet).
       allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['title', 'poem', 'category', 'likes']);
+      allow create: if true;
+      allow delete: if true;
     }
 
     match /faqs/{faqId} {

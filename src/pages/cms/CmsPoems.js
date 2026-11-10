@@ -125,6 +125,7 @@ const CmsPoems = () => {
       fetchPoems();
     } catch (err) {
       console.error(err);
+      setActionMsg("Save failed: " + (err.code || err.message));
     } finally {
       setLoading(false);
     }
@@ -137,6 +138,7 @@ const CmsPoems = () => {
       setActionMsg("Poem deleted");
     } catch (err) {
       console.error(err);
+      setActionMsg("Delete failed: " + (err.code || err.message));
     }
   };
 
@@ -147,6 +149,7 @@ const CmsPoems = () => {
       setActionMsg("Likes reset");
     } catch (err) {
       console.error(err);
+      setActionMsg("Reset failed: " + (err.code || err.message));
     }
   };
 
